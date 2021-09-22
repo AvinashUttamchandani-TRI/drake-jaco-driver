@@ -11,7 +11,7 @@
 // I don't know why the Kinova API defines this twice, and differently.  It
 // doesn't appear to be used.
 #undef COMM_LAYER_PATH
-#endif  // USE_ETHERNET
+#endif // USE_ETHERNET
 
 // Even if we're not using the ethernet layer, some versions of the SDK refer
 // to it from the USB command layer header but don't actually include the
@@ -38,6 +38,7 @@
 #define SdkStartControlAPI(x) Ethernet_StartControlAPI(x);
 #define SdkInitFingers(x) Ethernet_InitFingers(x);
 #define SdkSetAngularControl(x) Ethernet_SetAngularControl(x);
+#define SdkGetGeneralInformations(x) Ethernet_GetGeneralInformations(x);
 
 #else
 
@@ -55,9 +56,9 @@
 #define SdkStartControlAPI(x) StartControlAPI(x);
 #define SdkInitFingers(x) InitFingers(x);
 #define SdkSetAngularControl(x) SetAngularControl(x);
+#define SdkGetGeneralInformations(x) GetGeneralInformations(x);
 
-#endif  // USE_ETHERNET
-
+#endif // USE_ETHERNET
 
 /// Initializes the Kinova API.  Returns NO_ERROR_KINOVA on success, or the
 /// Kinova error code on failure (if the failure was not directly due to the

@@ -1,0 +1,23 @@
+# -*- python -*-
+
+package(default_visibility = ["//visibility:public"])
+
+load(
+    "@drake//tools/workspace/lcm:lcm.bzl",
+    "lcm_cc_library",
+)
+load(
+    "@drake//tools/skylark:drake_lcm.bzl",
+    "drake_lcm_cc_library",
+)
+
+drake_lcm_cc_library(
+    name = "jaco_temperature",
+    lcm_package = "drake",
+    lcm_srcs = [
+        "lcmt_jaco_temperature.lcm",
+    ],
+    tags = ["nolint"]
+)
+
+# install()
