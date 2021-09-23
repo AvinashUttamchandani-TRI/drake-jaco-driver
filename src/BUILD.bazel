@@ -31,7 +31,6 @@ cc_binary(
     deps = [
         ":kinova_driver_common",
         "@drake//lcmtypes:jaco",
-        "//lcmtypes:jaco_temperature",
         "@gflags//:gflags",
         "@jaco_sdk//:usb_command_layer",
         "@lcm",
