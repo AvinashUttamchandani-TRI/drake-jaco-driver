@@ -12,7 +12,6 @@
 
 #include "drake/lcmt_jaco_command.hpp"
 #include "drake/lcmt_jaco_status.hpp"
-#include "drake/lcmt_jaco_temperature.hpp"
 
 #include "kinova_driver_common.h"
 
@@ -24,14 +23,11 @@
   const int kKinovaUpdateIntervalUs = 10000;
   const char *kLcmCommandChannel = "KINOVA_JACO_COMMAND";
   const char *kLcmStatusChannel = "KINOVA_JACO_STATUS";
-  const char *kLcmTemperatureChannel = "KINOVA_JACO_TEMPERATURE";
 } // namespace
 
 DEFINE_string(lcm_command_channel, kLcmCommandChannel,
               "Channel to receive LCM command messages on");
 DEFINE_string(lcm_status_channel, kLcmStatusChannel,
-              "Channel to send LCM status messages on");
-DEFINE_string(lcm_temperature_channel, kLcmTemperatureChannel,
               "Channel to send LCM status messages on");
 DEFINE_string(lcm_url, "", "LCM URL for Jaco driver");
 DEFINE_string(optimal_z, "",
@@ -272,17 +268,17 @@ namespace
         }
       }
 
-      if (msgs_sent_ % 100 == 0)
+      if (msgs_sent_ % 100 == 0) // TODO(avinash.uttamchandani) - figure out the a useful rate here (1Hz probably okay? Maybe too much?)
       {
         GeneralInformations info;
         SdkGetGeneralInformations(info);
-        lcm_temperature_.joint_temperature[0] = info.ActuatorsTemperatures[0];
-        lcm_temperature_.joint_temperature[1] = info.ActuatorsTemperatures[1];
-        lcm_temperature_.joint_temperature[2] = info.ActuatorsTemperatures[2];
-        lcm_temperature_.joint_temperature[3] = info.ActuatorsTemperatures[3];
-        lcm_temperature_.joint_temperature[4] = info.ActuatorsTemperatures[4];
-        lcm_temperature_.joint_temperature[5] = info.ActuatorsTemperatures[5];
-        lcm_temperature_.joint_temperature[6] = info.ActuatorsTemperatures[6];
+        lcm_status_.joint_temperature[0] = info.ActuatorsTemperatures[0];
+        lcm_status_.joint_temperature[1] = info.ActuatorsTemperatures[1];
+        lcm_status_.joint_temperature[2] = info.ActuatorsTemperatures[2];
+        lcm_status_.joint_temperature[3] = info.ActuatorsTemperatures[3];
+        lcm_status_.joint_temperature[4] = info.ActuatorsTemperatures[4];
+        lcm_status_.joint_temperature[5] = info.ActuatorsTemperatures[5];
+        lcm_status_.joint_temperature[6] = info.ActuatorsTemperatures[6];
       }
 
       lcm_status_.utime = GetTime();
@@ -292,7 +288,6 @@ namespace
 
     lcm::LCM lcm_;
     drake::lcmt_jaco_status lcm_status_{};
-    drake::lcmt_jaco_temperature lcm_temperature_{};
 
     TrajectoryPoint commanded_velocity_;
     int64_t msgs_sent_{0};
