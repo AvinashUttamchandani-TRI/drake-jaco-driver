@@ -268,7 +268,7 @@ namespace
         }
       }
 
-      if (msgs_sent_ % 100 == 0) // TODO(avinash.uttamchandani) - figure out the a useful rate here (1Hz probably okay? Maybe too much?)
+      if (msgs_sent_ % 100 == 0) // TODO(avinash.uttamchandani) - lower the rate to 0.1Hz once debugged.
       {
         GeneralInformations info;
         SdkGetGeneralInformations(info);
